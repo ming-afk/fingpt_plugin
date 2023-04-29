@@ -1,56 +1,57 @@
-import json
+import requests
+import os
 
-import quart
-import quart_cors
-from quart import request
+import yaml
+from flask import Flask, jsonify, Response, request, send_from_directory
+from flask_cors import CORS
 
-app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
+app = Flask(__name__)
 
-# Keep track of todo's. Does not persist if Python session is restarted.
-_TODOS = {}
+PORT = 3333
 
-@app.post("/todos/<string:username>")
-async def add_todo(username):
-    request = await quart.request.get_json(force=True)
-    if username not in _TODOS:
-        _TODOS[username] = []
-    _TODOS[username].append(request["todo"])
-    return quart.Response(response='OK', status=200)
+# Note: Setting CORS to allow chat.openapi.com is required for ChatGPT to access your plugin
+CORS(app, origins=[f"https://localhost:{PORT}", "https://chat.openai.com"])
 
-@app.get("/todos/<string:username>")
-async def get_todos(username):
-    return quart.Response(response=json.dumps(_TODOS.get(username, [])), status=200)
+api_url = 'https://example.com'
 
-@app.delete("/todos/<string:username>")
-async def delete_todo(username):
-    request = await quart.request.get_json(force=True)
-    todo_idx = request["todo_idx"]
-    # fail silently, it's a simple plugin
-    if 0 <= todo_idx < len(_TODOS[username]):
-        _TODOS[username].pop(todo_idx)
-    return quart.Response(response='OK', status=200)
 
-@app.get("/logo.png")
-async def plugin_logo():
-    filename = 'logo.png'
-    return await quart.send_file(filename, mimetype='image/png')
+@app.route('/.well-known/ai-plugin.json')
+def serve_manifest():
+    return send_from_directory(os.path.dirname(__file__), 'ai-plugin.json')
 
-@app.get("/.well-known/ai-plugin.json")
-async def plugin_manifest():
-    host = request.headers['Host']
-    with open("./.well-known/ai-plugin.json") as f:
-        text = f.read()
-        return quart.Response(text, mimetype="text/json")
 
-@app.get("/openapi.yaml")
-async def openapi_spec():
-    host = request.headers['Host']
-    with open("openapi.yaml") as f:
-        text = f.read()
-        return quart.Response(text, mimetype="text/yaml")
+@app.route('/openapi.yaml')
+def serve_openapi_yaml():
+    with open(os.path.join(os.path.dirname(__file__), 'openapi.yaml'), 'r') as f:
+        yaml_data = f.read()
+    yaml_data = yaml.load(yaml_data, Loader=yaml.FullLoader)
+    return jsonify(yaml_data)
 
-def main():
-    app.run(debug=True, host="0.0.0.0", port=5003)
 
-if __name__ == "__main__":
-    main()
+@app.route('/openapi.json')
+def serve_openapi_json():
+    return send_from_directory(os.path.dirname(__file__), 'openapi.json')
+
+
+@app.route('/<path:path>', methods=['GET', 'POST'])
+def wrapper(path):
+
+    headers = {
+    'Content-Type': 'application/json',
+    }
+
+    url = f'{api_url}/{path}'
+    print(f'Forwarding call: {request.method} {path} -> {url}')
+
+    if request.method == 'GET':
+        response = requests.get(url, headers=headers, params=request.args)
+    elif request.method == 'POST':
+        print(request.headers)
+        response = requests.post(url, headers=headers, params=request.args, json=request.json)
+    else:
+        raise NotImplementedError(f'Method {request.method} not implemented in wrapper for {path=}')
+    return response.content
+
+
+if __name__ == '__main__':
+    app.run(port=PORT)
