@@ -2,7 +2,7 @@ import requests
 
 # Constants
 BASE_URL = "https://financialmodelingprep.com/api"
-FINANCIAL_PREP_API_KEY = 'c8fc248088cc9d0687ea4d069f304d97'
+FINANCIAL_PREP_API_KEY = '7515c2dce5befb8dc63a9cfca91732fe'
 DATA_DOCUMENTATION = [
     "Financial Ratios",
     "Earning Call Transcript",
@@ -90,7 +90,7 @@ def fetch_financial_ratios(symbol, limit=3):
         print(f"Failed to get data. Status code: {response.status_code}")
 
 def fetch_insider_trading(symbol):
-    url = f"https://financialmodelingprep.com/api/v4/insider-trading?symbol={ticker}&apikey={FINANCIAL_PREP_API_KEY}&page=0"
+    url = f"https://financialmodelingprep.com/api/v4/insider-trading?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}&page=0"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -101,7 +101,7 @@ def fetch_insider_trading(symbol):
 import requests
 
 def fetch_esg_data(symbol):
-    url = f"https://financialmodelingprep.com/api/v4/esg-environmental-social-governance-data?symbol={ticker}&apikey={FINANCIAL_PREP_API_KEY}"
+    url = f"https://financialmodelingprep.com/api/v4/esg-environmental-social-governance-data?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -110,7 +110,7 @@ def fetch_esg_data(symbol):
         return None
 
 def fetch_sec_filings(symbol):
-    url = f"https://financialmodelingprep.com/api/v3/sec_filings?symbol={ticker}&apikey={FINANCIAL_PREP_API_KEY}"
+    url = f"https://financialmodelingprep.com/api/v3/sec_filings?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -155,4 +155,4 @@ def execute_retrieve_financial_data_base(tickers, data_names):
     return result
 
 
-fetch_latest_earnings_call_transcript("GOOG")
+print(fetch_sec_filings("GOOG"))
