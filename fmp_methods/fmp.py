@@ -14,6 +14,17 @@ DATA_DOCUMENTATION = [
 ]
 
 # Functions
+
+def fetch_company_quote(ticker):
+    url = f"{BASE_URL}/v3/quote/{ticker}?apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        return None
+
 def fetch_single_stock_news(ticker, limit=50):
     url = f"{BASE_URL}/v3/stock_news?tickers={ticker}&limit={limit}&apikey={FINANCIAL_PREP_API_KEY}"
     response = requests.get(url)
@@ -65,6 +76,7 @@ def fetch_analyst_target_price(symbol, limit=10):
 
     if response.status_code == 200:
         data = response.json()
+        return data
         i = 0
         for entry in data:
             published_date = entry.get("publishedDate")[:10]
@@ -108,9 +120,9 @@ def fetch_esg_data(symbol):
     else:
         print(f"Failed to get data. Status code: {response.status_code}")
         return None
-
-def fetch_sec_filings(symbol):
-    url = f"https://financialmodelingprep.com/api/v3/sec_filings?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
+#>>>>>>>>sales by product segmentation<<<<<<<<<<<<<
+def fetch_revenue_product_segmentation_annually(symbol):
+    url = f"{BASE_URL}/v4/revenue-product-segmentation?symbol={symbol}&structure=flat&apikey={FINANCIAL_PREP_API_KEY}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -118,13 +130,82 @@ def fetch_sec_filings(symbol):
         print(f"Failed to get data. Status code: {response.status_code}")
         return None
 
+def fetch_sales_revenue_by_product_segement_quarterly(symbol):
+    url = f"https://financialmodelingprep.com/api/v3/sec_filings?symbol={symbol}&period=quarter&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+# >>>>>>>>>>sales by geographic segmentation <<<<<<<<<<<<
+def fetch_sales_revenue_by_geographic_segmentation_annually(symbol):
+    url = f"https://financialmodelingprep.com/api/v4/revenue-geographic-segmentation?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+def fetch_sales_revenue_by_geographic_segmentation_quarterly(symbol):
+    url = f"https://financialmodelingprep.com/api/v4/revenue-geographic-segmentation?symbol={symbol}&period=quarter&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+
+# >>>>>>> social media sentiments <<<<<<<<<<<<
+def social_media_sentiments(symbol):
+    url = f"https://financialmodelingprep.com/api/v4/historical/social-sentiment?symbol={symbol}&page=0&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+
+
+
+
+#>>>>>>>>>>>> company profile <<<<<<<<<<<<<<<<
+
+def fetch_company_profile(symbol):
+    url = f"https://financialmodelingprep.com/api/v3/profile/{symbol}?apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+    
+def fetch_company_executives(symbol):
+    url = f"https://financialmodelingprep.com/api/v3/key-executives/{symbol}?apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+    
+
+    
+
+
+
 def default_case(data_name):
     if data_name in DATA_DOCUMENTATION:
         print("This method not implemented yet!")
     else:
         print(f"data_name {data_name} does not exist")
 
-import requests
+
+# /api/v4/revenue-product-segmentation?symbol=AAPL&structure=flat
+
 
 def execute_retrieve_financial_data_base(tickers, data_names):
     result = {}
@@ -155,4 +236,4 @@ def execute_retrieve_financial_data_base(tickers, data_names):
     return result
 
 
-print(fetch_sec_filings("GOOG"))
+print(fetch_company_quote("GOOGL"))

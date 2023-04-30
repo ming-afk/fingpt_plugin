@@ -67,7 +67,35 @@ async def get_latest_earnings_call_transcript(ticker):
 @app.get("/analyst_target_price/<string:ticker>")
 async def get_fetch_analyst_target_price(ticker):
     return quart.Response(response=json.dumps(fetch_analyst_target_price(ticker, 10)), status=200)
+# ! the link wshould allign with what is on openai.yaml
+@app.get("/sec_filings/<string:ticker>")
+async def get_sec_filings(ticker):
+    return quart.Response(response=json.dumps(fetch_sec_filings(ticker)), status=200)
 
+@app.get("/esg_score/<string:ticker>")
+async def get_esg_data(ticker):
+    return quart.Response(response=json.dumps(fetch_esg_data(ticker)), status=200)
+# >>>>>>>>revenue product segmentation<<<<<
+@app.get("/revenue_product_segmentation_annually/<string:ticker>")
+async def get_revenue_product_segmentation_annually(ticker):
+    return quart.Response(response=json.dumps(fetch_revenue_product_segmentation_annually(ticker)), status=200)
+
+@app.get("/fetch_sales_revenue_by_product_segement_quarterly/<string:ticker>")
+async def get_sales_revenue_by_product_segement_quarterly(ticker):
+    return quart.Response(response=json.dumps(fetch_sales_revenue_by_product_segement_quarterly(ticker)), status=200)
+# >>>>>>>>>> revenue geographic segmentation <<<<<<<<<<
+@app.get("/sales_revenue_by_geographic_segmentation_annually/<string:ticker>")
+async def get_sales_revenue_by_geographic_segmentation_annually(ticker):
+    return quart.Response(response=json.dumps(fetch_sales_revenue_by_geographic_segmentation_annually(ticker)), status=200)
+
+@app.get("/sales_revenue_by_geographic_segmentation_quarterly/<string:ticker>")
+async def get_sales_revenue_by_geographic_segmentation_quarterly(ticker):
+    return quart.Response(response=json.dumps(fetch_sales_revenue_by_geographic_segmentation_quarterly(ticker)), status=200)
+
+# >>>>>>>>>> social sentiements <<<<<<<<<<
+@app.get("/social_media_sentiments/<string:ticker>")
+async def get_social_media_sentiments(ticker):
+    return quart.Response(response=json.dumps(social_media_sentiments(ticker)), status=200)
 
 
 def main():
