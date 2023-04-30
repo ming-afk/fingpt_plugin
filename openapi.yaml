@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: TODO Plugin
-  description: A plugin that allows the user to create and manage a TODO list using ChatGPT. If you do not know the user's username, ask them first before making queries to the plugin. Otherwise, use the username "global".
+  title: finance data plugin
+  description: A plugin that allows you to retrieve financial data for a company based on its ticker symbol.
   version: 'v1'
 servers:
   - url: http://localhost:5003
@@ -41,6 +41,98 @@ paths:
             text/plain:
               schema:
                 type: string
+
+  /stock_news/{ticker}:
+    get:
+      operationId: getStockNews
+      summary: Retrieve recent stock news for a company based on its ticker symbol
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which financial ratios are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    # Add properties here based on the structure of the JSON response
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+
+
+  /earning_call_transcript/{ticker}:
+    get:
+      operationId: getEarningCallTranscript
+      summary: Retrieve recent quater earning call transcript
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which financial ratios are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+              
+                    # Add properties here based on the structure of the JSON response
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /analyst_target_price/{ticker}:
+    get:
+      operationId: getAnalystTarget
+      summary: Retrieve recent analyst target price
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which financial ratios are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+              
+                    # Add properties here based on the structure of the JSON response
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+
+
 
 components:
   schemas:

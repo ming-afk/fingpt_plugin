@@ -56,6 +56,20 @@ async def openapi_spec():
 async def get_financial_ratios(ticker):
     return quart.Response(response=json.dumps(fetch_financial_ratios(ticker,3)), status=200)
 
+@app.get("/stock_news/<string:ticker>")
+async def get_single_stock_news(ticker):
+    return quart.Response(response=json.dumps(fetch_single_stock_news(ticker,20)), status=200)
+
+@app.get("/earning_call_transcript/<string:ticker>")
+async def get_latest_earnings_call_transcript(ticker):
+    return quart.Response(response=json.dumps(fetch_latest_earnings_call_transcript(ticker)), status=200)
+
+@app.get("/analyst_target_price/<string:ticker>")
+async def get_fetch_analyst_target_price(ticker):
+    return quart.Response(response=json.dumps(fetch_analyst_target_price(ticker, 10)), status=200)
+
+
+
 def main():
     app.run(debug=True, host="0.0.0.0", port=5003)
 
