@@ -98,6 +98,45 @@ async def get_social_media_sentiments(ticker):
     return quart.Response(response=json.dumps(social_media_sentiments(ticker)), status=200)
 
 
+# >>> company profile <<<<<<<
+@app.get("/company_profile/<string:ticker>")
+async def get_company_profile(ticker):
+    return quart.Response(response=json.dumps(fetch_company_profile(ticker)), status=200)
+
+@app.get("/company_executives/<string:ticker>")
+async def get_company_executives(ticker):
+    return quart.Response(response=json.dumps(fetch_company_executives(ticker)), status=200)
+
+# >>>>>>>>>> company quotes <<<<<<<<<<
+@app.get("/company_quote/<string:ticker>")
+async def get_company_quotes(ticker):
+    return quart.Response(response=json.dumps(fetch_company_quote(ticker)), status=200)
+
+
+# >>>>>>>>>> company DCFs <<<<<<<<<<
+@app.get("/company_dcf/<string:ticker>")
+async def get_company_dcf(ticker):
+    return quart.Response(response=json.dumps(fetch_company_DCF(ticker)), status=200)
+
+@app.get("/detailed_dcf_projection_including_wacc_data/<string:ticker>")
+async def get_detailed_dcf_projection_including_wacc_data(ticker):
+    return quart.Response(response=json.dumps(fetch_detailed_dcf_projection_including_wacc_data(ticker)), status=200)
+
+
+@app.get("/income_statement_quarter/<string:ticker>")
+async def get_income_statement_quarter(ticker):
+    return quart.Response(response=json.dumps(fetch_income_statement_quarterly(ticker)), status=200)
+
+@app.get("/balance_sheet_quarter/<string:ticker>")
+async def get_balance_sheet_quarter(ticker):
+    return quart.Response(response=json.dumps(fetch_balance_sheet_quarterly(ticker)), status=200)
+
+@app.get("/cash_flow_quarter/<string:ticker>")
+async def get_cash_flow_statement_quarter(ticker):
+    return quart.Response(response=json.dumps(fetch_cash_flow_quarterly(ticker)), status=200)
+
+
+
 def main():
     app.run(debug=True, host="0.0.0.0", port=5003)
 

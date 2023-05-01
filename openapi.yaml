@@ -294,6 +294,184 @@ paths:
                   type: object
                   properties:
 
+  /company_profile/{ticker}:
+    get:
+      operationId: getCompanyProfile
+      summary: Retrieve company profile (e.g. company description, industry, price, beta, ceo, employee number, address, contact, logo etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /company_executives/{ticker}:
+    get:
+      operationId: getCompanyExecutives
+      summary: Retrieve company executives (e.g. CEO, CFO, CTO, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /company_quote/{ticker}:
+    get:
+      operationId: getCompanyQuote
+      summary: Retrieve company quote (e.g. price, market cap, enterprise value, volume, avg volume, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /company_dcf/{ticker}:
+    get:
+      operationId: getCompanyDCFResult
+      summary: Retrieve company DCF result (e.g. this one only gvies result ro retrieve the DCF, cash flow and wacc details use the endpoint detailed_DCF_projection_including_wacc_data)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+
+
+  /detailed_dcf_projection_including_wacc_data/{ticker}:
+    get:
+      operationId: getCompanyDCFDetails
+      summary: Retrieve company DCF details (e.g. DCF projection, free cash flow, wacc, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /income_statement_quarter/{ticker}:
+    get:
+      operationId: getIncomeStatementQuarterly
+      summary: Retrieve company Income Statement quarterly (e.g. revenue, gross profit, net income, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /balance_sheet_quarter/{ticker}:
+    get:
+      operationId: getBalanceSheetQuarterly
+      summary: Retrieve company Balance Sheet quarterly (e.g. cash, debt, assets, liabilities, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
+  /cash_flow_quarter/{ticker}:
+    get:
+      operationId: getCashFlowQuarterly
+      summary: Retrieve company cash flow quarterly (e.g. operating cash flow, investing cash flow, financing cash flow, etc.)
+      parameters:
+        - in: path
+          name: ticker
+          schema:
+            type: string
+          required: true
+          description: The ticker symbol of the company for which information are to be fetched.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+
 
 components:
   schemas:

@@ -5,7 +5,7 @@
     "name_for_human": "TODO Plugin (no auth)",
     "name_for_model": "financeGPT",
     "description_for_human": "Plugin for retreiving a wide range of finance data in different assets and companies.",
-    "description_for_model": "Plugin for retreiving a wide range of finance data in different assets and companies.",
+    "description_for_model": "Plugin for retreiving a wide range of finance data in different assets and companies. All data is up-to-date and is retreived from our credible proprietory sources.",
     "auth": {
       "type": "none"
     },

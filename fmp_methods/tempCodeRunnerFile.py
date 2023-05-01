@@ -1,1 +1,1 @@
-fetch_sales_revenue_by_geographic_segmentation_quarterly
+fetch_company_quote

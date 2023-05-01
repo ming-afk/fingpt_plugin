@@ -193,9 +193,55 @@ def fetch_company_executives(symbol):
         return None
     
 
-    
+def fetch_company_DCF(symbol):
+    url = f"https://financialmodelingprep.com/api/v3/discounted-cash-flow/{symbol}?apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+def fetch_detailed_dcf_projection_including_wacc_data(symbol):
+    url = f"https://financialmodelingprep.com/api/v4/advanced_discounted_cash_flow?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
 
 
+# >>>>>> financial Statements <<<<<<<<<<<<
+def fetch_income_statement_quarterly(symbol,limit=12):
+    url = f"https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period=quarter&limit={limit}&apikey={FINANCIAL_PREP_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+
+def fetch_balance_sheet_quarterly(symbol,limit=12):
+    url = f"https://financialmodelingprep.com/api/v3/balance-sheet-statement/{symbol}?period=quarter&limit={limit}&apikey={FINANCIAL_PREP_API_KEY}"
+    print(url)
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+def fetch_cash_flow_quarterly(symbol,limit=12):
+    url = f"https://financialmodelingprep.com/api/v3/cash-flow-statement/{symbol}?period=quarter&limit={limit}&apikey={FINANCIAL_PREP_API_KEY}"
+    print(url)
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
 
 def default_case(data_name):
     if data_name in DATA_DOCUMENTATION:
@@ -236,4 +282,3 @@ def execute_retrieve_financial_data_base(tickers, data_names):
     return result
 
 
-print(fetch_company_quote("GOOGL"))
