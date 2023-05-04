@@ -110,7 +110,6 @@ def fetch_insider_trading(symbol):
         print(f"Failed to get data. Status code: {response.status_code}")
         return None
 
-import requests
 
 def fetch_esg_data(symbol):
     url = f"https://financialmodelingprep.com/api/v4/esg-environmental-social-governance-data?symbol={symbol}&apikey={FINANCIAL_PREP_API_KEY}"
@@ -131,7 +130,7 @@ def fetch_revenue_product_segmentation_annually(symbol):
         return None
 
 def fetch_sales_revenue_by_product_segement_quarterly(symbol):
-    url = f"https://financialmodelingprep.com/api/v3/sec_filings?symbol={symbol}&period=quarter&apikey={FINANCIAL_PREP_API_KEY}"
+    url = f"https://financialmodelingprep.com/api/v4/revenue-product-segmentation?symbol={symbol}&period=quarter&apikey={FINANCIAL_PREP_API_KEY}"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -243,6 +242,18 @@ def fetch_cash_flow_quarterly(symbol,limit=12):
         print(f"Failed to get data. Status code: {response.status_code}")
         return None
 
+def fetch_sec_filings(symbol,limit=12):
+    url = f"https://financialmodelingprep.com/api/v3/sec_filings/{symbol}?type=10-k&page=0&apikey={FINANCIAL_PREP_API_KEY}"
+    print(url)
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Failed to get data. Status code: {response.status_code}")
+        return None
+
+
+
 def default_case(data_name):
     if data_name in DATA_DOCUMENTATION:
         print("This method not implemented yet!")
@@ -282,3 +293,4 @@ def execute_retrieve_financial_data_base(tickers, data_names):
     return result
 
 
+print(fetch_sec_filings("TSLA"))

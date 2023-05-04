@@ -68,7 +68,7 @@ async def get_latest_earnings_call_transcript(ticker):
 async def get_fetch_analyst_target_price(ticker):
     return quart.Response(response=json.dumps(fetch_analyst_target_price(ticker, 10)), status=200)
 # ! the link wshould allign with what is on openai.yaml
-@app.get("/sec_filings/<string:ticker>")
+@app.get("/SEC_Filling/<string:ticker>")
 async def get_sec_filings(ticker):
     return quart.Response(response=json.dumps(fetch_sec_filings(ticker)), status=200)
 
@@ -80,7 +80,7 @@ async def get_esg_data(ticker):
 async def get_revenue_product_segmentation_annually(ticker):
     return quart.Response(response=json.dumps(fetch_revenue_product_segmentation_annually(ticker)), status=200)
 
-@app.get("/fetch_sales_revenue_by_product_segement_quarterly/<string:ticker>")
+@app.get("/sales_revenue_by_product_segement_quarterly/<string:ticker>")
 async def get_sales_revenue_by_product_segement_quarterly(ticker):
     return quart.Response(response=json.dumps(fetch_sales_revenue_by_product_segement_quarterly(ticker)), status=200)
 # >>>>>>>>>> revenue geographic segmentation <<<<<<<<<<

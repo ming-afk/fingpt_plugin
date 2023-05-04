@@ -194,7 +194,6 @@ paths:
             type: string
           required: true
           description: The ticker symbol of the company for which information are to be fetched.
-      
       responses:
         "200":
           description: OK
